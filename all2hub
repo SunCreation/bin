@@ -28,7 +28,6 @@ while git_dir:
     di = git_dir.pop()
     os.system(f'cd {di} && pwd && git add .')
     hi = os.popen(f'cd {di} && git status')
-<<<<<<< HEAD
     addlist = [i.split(':')[-1].strip() for i in list(hi.readlines())[2:] if ':' in i and not i.strip().endswith(':')]
     answer = 'y'
     push = False
@@ -49,22 +48,3 @@ while git_dir:
         branch = input('branch name: ')
         os.system(f'cd {di} && git push origin {branch}')
 print('All is done.')
-=======
-    addlist = [i for i in list(hi.readlines())[2:] if ':' in i]
-    answer = 'y'
-    while (answer=='y' or answer=='Y') and addlist:
-        answer = input(f"{di.split('/')[-2].ljust(30,' ')} -> continue? (y/n):\n")
-        os.system('clear -x')
-        if answer=='y' or answer=='Y':
-            for i, j in enumerate(addlist):
-                print(j.ljust(70,' '),'-',str(i))
-            checklist = list(map(int,input('Enter number list(ex: 2 5 7): ').split()))
-            commit = input('commit message: ')
-            for i in sorted(checklist,reverse=True):
-                os.system(f'git add {addlist.pop(i)}')
-            os.system(f'git commit -m "{commit}"')
-
-        else: break
-
-print('All is done.')
->>>>>>> 781e6e873374357c1832a19311662a24d5a84bd2
