@@ -19,24 +19,25 @@ print('Push list!\n',*git_dir, sep='\n  ', end='\n\n\n')
 print('Start!')
 while git_dir:
     di = git_dir.pop()
-    os.system(f'cd {di} && pwd && git add .')
+    os.system(f'echo "" && cd {di} && pwd && git add .')
     hi = os.popen(f'cd {di} && git status')
     addlist = [i.split(':')[-1].strip() for i in list(hi.readlines())[2:] if ':' in i and not i.strip().endswith(':')]
     answer = 'y'
     push = False
+    if not addlist: print('  nothing to commit.')
+    else: answer = input(f"    repository name: {di.split('/')[-2].ljust(30,' ')}\n     -> start commit? (y/n): ")
     while (answer=='y' or answer=='Y') and addlist:
-        answer = input(f"    repository name: {di.split('/')[-2].ljust(30,' ')} -> continue? (y/n):\n")
-        # os.system('clear -x')
-        if answer=='y' or answer=='Y':
-            for i, j in enumerate(addlist):
-                print(' '*10,j.ljust(50,' '),'- ',str(i),'\n')
-            checklist = list(map(int,input('\n\n    Enter number list(ex: 0 5 6): ').split()))
-            commit = input('\n    commit message: ')
-            for i in sorted(checklist,reverse=True):
-                os.system(f'cd {di} && git add {addlist.pop(i)}')
-            os.system(f'cd {di} && git commit -m "{commit}"')
-            push = True
-        else: break
+        for i, j in enumerate(addlist):
+            print(' '*10,j.ljust(50,' '),'- ',str(i),'\n')
+        checklist = list(map(int,input('\n\n    Enter number list(ex: 0 5 6): ').split()))
+        commit = input('\n    commit message: ')
+        for i in sorted(checklist,reverse=True):
+            os.system(f'cd {di} && git add {addlist.pop(i)}')
+        os.system(f'cd {di} && git commit -m "{commit}"')
+        push = True
+        if addlist:
+            answer = input(f"    repository name: {di.split('/')[-2].ljust(30,' ')}\n     -> continue? (y/n): ")
+
     if push:
         branch = input('\n    branch name: ')
         os.system(f'cd {di} && git push origin {branch}')

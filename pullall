@@ -22,7 +22,8 @@ if all_=='y' or all_=='Y':
     all_ = True
 else: all_=False
 if all_: branch_name = input('    branch name: ')
-
+print('Start!\n')
 for i in git_dir:
     if not all_: branch_name = input('    branch name: ')
     os.system(f'cd {i} && git pull origin {branch_name}')
+    print('')
