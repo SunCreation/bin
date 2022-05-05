@@ -1,0 +1,47 @@
+#!/bin/python3
+
+import argparse as ap
+import os
+from pprint import pprint
+# from IPython.display import clear_output
+parser = ap.ArgumentParser(description='all to github')
+parser.add_argument('-d','--dir',type=str,default='.',help='Choose directory for push')
+args = parser.parse_args()
+
+d = args.dir
+now = os.getcwd()
+
+hi = os.popen(f'find {d} -maxdepth 4 | grep "\.git"')
+# print(hi.read())
+
+git_dir = {now+'/' + i.split('.git')[0] for i in list(hi.readlines())}
+# print(type(hi))
+# hi = range(len(git_dir)).__iter__()
+# git_dir = [i.ljust(70,' ') + f'\t - {next(hi)}' for i in git_dir]
+
+print('Push list!\n',*git_dir, sep='\n')
+# clear_output()
+# checklist = list(map(int,input('Enter number list(ex: 2 5 7): ').split()))
+
+# os.system('clear -x')
+while git_dir:
+    di = git_dir.pop()
+    os.system(f'cd {di} && pwd && git add .')
+    hi = os.popen(f'cd {di} && git status')
+    addlist = [i for i in list(hi.readlines())[2:] if ':' in i]
+    answer = 'y'
+    while (answer=='y' or answer=='Y') and addlist:
+        answer = input(f"{di.split('/')[-2].ljust(30,' ')} -> continue? (y/n):\n")
+        os.system('clear -x')
+        if answer=='y' or answer=='Y':
+            for i, j in enumerate(addlist):
+                print(j.ljust(70,' '),'-',str(i))
+            checklist = list(map(int,input('Enter number list(ex: 2 5 7): ').split()))
+            commit = input('commit message: ')
+            for i in sorted(checklist,reverse=True):
+                os.system(f'git add {addlist.pop(i)}')
+            os.system(f'git commit -m "{commit}"')
+
+        else: break
+
+print('All is done.')
