@@ -1,0 +1,6 @@
+#!/bin/bash
+# Credit: This ocde is based on answers provided by Waschtl and KrisWebDev
+# https://askubuntu.com/questions/60837/record-a-programs-output-with-pulseaudio
+# NOTE: An inproved script written in python can be found here https://gist.github.com/ramast/c47bd5e57586e9c2deb74975e27089f0
+
+cleanup(){
