@@ -1,0 +1,28 @@
+#!/bin/python3
+
+import argparse as ap
+import os
+from pprint import pprint
+# from IPython.display import clear_output
+parser = ap.ArgumentParser(description='all to github')
+parser.add_argument('-d','--dir',type=str,default='.',help='Choose directory for push')
+args = parser.parse_args()
+
+d = args.dir
+now = os.getcwd()
+
+hi = os.popen(f'find {d} -maxdepth 4 | grep "\.git"')
+
+git_dir = {now+'/' + i.split('.git')[0] for i in list(hi.readlines())}
+
+print('Push list!\n',*git_dir, sep='\n  ')
+
+all_ = input('  Is branch name all same? (y/n): ')
+if all_=='y' or all_=='Y':
+    all_ = True
+else: all_=False
+if all_: branch_name = input('    branch name: ')
+
+for i in git_dir:
+    if not all_: branch_name = input('    branch name: ')
+    os.system(f'cd {i} && git pull origin {branch_name}')
