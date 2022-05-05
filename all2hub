@@ -28,7 +28,7 @@ while git_dir:
     di = git_dir.pop()
     os.system(f'cd {di} && pwd && git add .')
     hi = os.popen(f'cd {di} && git status')
-    addlist = [i.split(':')[-1].strip() for i in list(hi.readlines())[2:] if ':' in i]
+    addlist = [i.split(':')[-1].strip() for i in list(hi.readlines())[2:] if ':' in i and not i.strip().endswith(':')]
     answer = 'y'
     push = False
     while (answer=='y' or answer=='Y') and addlist:
