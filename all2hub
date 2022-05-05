@@ -29,7 +29,7 @@ while git_dir:
     while (answer=='y' or answer=='Y') and addlist:
         for i, j in enumerate(addlist):
             print(' '*10,j.ljust(50,' '),'- ',str(i),'\n')
-        checklist = list(map(int,input('\n\n    Enter number list(ex: 0 5 6): ').split()))
+        checklist = list(map(int,input('\n    Enter number list(ex: 0 5 6): ').split()))
         commit = input('\n    commit message: ')
         for i in sorted(checklist,reverse=True):
             os.system(f'cd {di} && git add {addlist.pop(i)}')
