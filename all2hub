@@ -25,7 +25,7 @@ while git_dir:
     push = False
 
     if not addlist: print('  nothing to commit.')
-    else: answer = input(f"    repository name: {di.split('/')[-2].ljust(30,' ')}\n     -> start commit? (y/n): ")
+    else: answer = input(f"    repository name: {di.split('/')[-2].ljust(30,' ')}\n    -> start commit? (y/n): ")
 
     while (answer=='y' or answer=='Y') and addlist:
         for i, j in enumerate(addlist):
