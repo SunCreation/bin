@@ -20,7 +20,7 @@ while git_dir:
     di = git_dir.pop()
     os.system(f'echo "" && cd {di} && pwd && git add .')
     hi = os.popen(f'cd {di} && git status')
-    addlist = [i.split(':')[-1].strip() for i in list(hi.readlines())[2:] if ':' in i and not i.strip().endswith(':')]
+    addlist = [eval(f'''b"{i.split(':')[-1].strip()}"''').decode('utf-8') for i in list(hi.readlines())[2:] if ':' in i and not i.strip().endswith(':')]
     answer = 'y'
     push = False
 
@@ -34,7 +34,9 @@ while git_dir:
         commit = input('\n    commit message: ')
 
         for i in sorted(checklist,reverse=True):
-            os.system(f'cd {di} && git add {addlist.pop(i)}')
+            contents = addlist.pop(i)
+            contents = contents if ' -> ' not in contents else contents.split(' -> ')[-1]
+            os.system(f'cd {di} && git add {contents}')
         os.system(f'cd {di} && git commit -m "{commit}"')
         push = True
 
