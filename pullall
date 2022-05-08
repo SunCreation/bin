@@ -15,7 +15,7 @@ hi = os.popen(f'find {d} -maxdepth 4 | grep "\.git"')
 
 git_dir = {now+'/' + i.split('.git')[0] for i in list(hi.readlines())}
 
-print('Push list!\n',*git_dir, sep='\n  ')
+print('Pull list!\n',*git_dir, sep='\n  ')
 
 all_ = input('  Is branch name all same? (y/n): ')
 if all_=='y' or all_=='Y':
