@@ -35,7 +35,7 @@ while git_dir:
     while (answer=='y' or answer=='Y') and addlist:
         for i, j in enumerate(addlist):
             print(' '*10,j.ljust(50,' '),'- ',str(i),'\n')
-        randnum = list(map(str,[random.randint(0,len(addlist)-1) for i in range(ceil(len(addlist)/2))]))
+        randnum = list(map(str,{random.randint(0,len(addlist)-1) for i in range(ceil(len(addlist)/2))}))
         checklist = list(map(int,input(f'\n    Enter number list(ex: {" ".join(randnum)}): ').split()))
         commit = input('\n    commit message: ')
 
