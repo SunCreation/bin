@@ -37,14 +37,17 @@ while git_dir:
         for i, j in enumerate(addlist):
             print(' '*10,j.ljust(50,' '),'- ',str(i),'\n')
         randnum = list(map(str,{random.randint(0,len(addlist)-1) for i in range(ceil(len(addlist)/2))}))
-        checklist = list(map(int,input(f'\n    Enter number list(ex: {" ".join(randnum)}): ').split()))
+        checklist = input(f'\n    Enter number list(ex: {" ".join(randnum)} or, "all"): ').split()
         commit = input('\n    commit message: ')
-
-        for i in sorted(checklist,reverse=True):
-            contents = addlist.pop(i)
-            contents = contents if ' -> ' not in contents else contents.split(' -> ')[-1]
-            print(f'git add {contents}')
-            os.system(f'cd {di} && git add {contents}')
+        if 'all' in checklist:
+            os.system(f'cd {di} && git add .')
+        else:
+            checklist = list(map(int, checklist))
+            for i in sorted(checklist,reverse=True):
+                contents = addlist.pop(i)
+                contents = contents if ' -> ' not in contents else contents.split(' -> ')[-1]
+                print(f'git add {contents}')
+                os.system(f'cd {di} && git add {contents}')
         os.system(f'cd {di} && git commit -m "{commit}"')
         push = True
 
