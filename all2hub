@@ -20,8 +20,9 @@ print('Push list!\n',*git_dir, sep='\n  ', end='\n\n\n')
 print('Start!')
 while git_dir:
     di = git_dir.pop()
-    # os.system(f'echo "" && cd {di} && pwd && git add .') 필요가 없는 듯 하다.
+    os.system(f'echo "" && cd {di} && pwd && git add .')
     hi = os.popen(f'cd {di} && git status')
+    os.system(f'cd {di} && git reset HEAD')
     addlist = [eval(f"""b'{i.split(":")[-1].strip()}'""").decode('utf-8') for i in list(hi.readlines())[2:] if ':' in i and not i.strip().endswith(':')]
     answer = 'y'
     push = False
