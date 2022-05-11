@@ -2,11 +2,22 @@
 
 import argparse as ap
 import os
-from pprint import pprint
+import multiprocessing as multi
+from math import ceil
 # from IPython.display import clear_output
 parser = ap.ArgumentParser(description='all to github')
 parser.add_argument('-d','--dir',type=str,default='.',help='Choose directory for push')
 args = parser.parse_args()
+
+cpu_num = multi.cpu_count()
+
+def git_pull(di_all_branch_name):
+    di, all_, branch_name = di_all_branch_name
+    if not all_: branch_name = input('    branch name: ')
+    temp = os.popen(f'cd {di} && git pull origin {branch_name}')
+    print(temp)
+    print('')
+
 
 d = args.dir
 now = os.getcwd()
@@ -23,7 +34,13 @@ if all_=='y' or all_=='Y':
 else: all_=False
 if all_: branch_name = input('    branch name: ')
 print('Start!\n')
-for i in git_dir:
-    if not all_: branch_name = input('    branch name: ')
-    os.system(f'cd {i} && git pull origin {branch_name}')
-    print('')
+
+pool = multi.Pool(processes=ceil(cpu_num/2))
+pool.map(git_pull, zip(git_dir, [all_]*len(git_dir), [branch_name]*len(git_dir)))
+pool.close()
+pool.join()
+print('All is done')
+# for i in git_dir:
+#     if not all_: branch_name = input('    branch name: ')
+#     os.system(f'cd {i} && git pull origin {branch_name}')
+#     print('')
