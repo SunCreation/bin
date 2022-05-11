@@ -39,8 +39,12 @@ while git_dir:
         randnum = list(map(str,{random.randint(0,len(addlist)-1) for i in range(ceil(len(addlist)/2))}))
         checklist = input(f'\n    Enter number list(ex: {" ".join(randnum)} or, "all"): ').split()
         commit = input('\n    commit message: ')
+        
         if 'all' in checklist:
             os.system(f'cd {di} && git add .')
+            os.system(f'cd {di} && git commit -m "{commit}"')
+            push = True
+            break
         else:
             checklist = list(map(int, checklist))
             for i in sorted(checklist,reverse=True):
