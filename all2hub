@@ -4,6 +4,7 @@ import argparse as ap
 import os
 import random
 from math import ceil
+from time import sleep
 
 parser = ap.ArgumentParser(description='all to github')
 parser.add_argument('-d','--dir',type=str,default='.',help='Choose directory for push')
@@ -61,6 +62,6 @@ while git_dir:
     if push:
         branch = input('\n    branch name: ')
         os.system(f'cd {di} && git push origin {branch}')
-
+    sleep(0.1)
 os.system('clear -x')
 print('  All is done.')
