@@ -62,6 +62,6 @@ while git_dir:
     if push:
         branch = input('\n    branch name: ')
         os.system(f'cd {di} && git push origin {branch}')
-    sleep(0.1)
+
 os.system('clear -x')
 print('  All is done.')
