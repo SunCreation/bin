@@ -13,7 +13,7 @@ d = args.dir
 
 now = os.getcwd()
 
-hi = os.popen(f'find {d} -maxdepth 4 | grep "\.git"')
+hi = os.popen(f'find {d} -maxdepth 5 | grep "\.git"')
 
 git_dir = {now+'/' + i.split('.git')[0] for i in list(hi.readlines())}
 
