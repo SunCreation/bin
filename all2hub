@@ -24,7 +24,7 @@ while git_dir:
     os.system(f'echo "" && cd {di} && pwd && git add .')
     hi = os.popen(f'cd {di} && git status')
     os.system(f'cd {di} && git reset HEAD')
-    addlist = [eval(f"""b'{i.split(":")[-1].strip()}'""").decode('utf-8') for i in list(hi.readlines())[2:] if ':' in i and not i.strip().endswith(':')]
+    addlist = [eval(f"""b'{"".join(i.split(":")[1:]).strip()}'""").decode('utf-8') for i in list(hi.readlines())[2:] if ':' in i and not i.strip().endswith(':')]
     answer = 'y'
     push = False
 

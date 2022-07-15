@@ -1,0 +1,4 @@
+read -p "Enter user's email: " email
+read -p "Enter user's name : " name
+git config --global user.email "{$email}"
+git config --global user.name "{$name}"

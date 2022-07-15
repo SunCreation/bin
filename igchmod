@@ -1,0 +1,42 @@
+#!/usr/bin/python3
+
+import argparse as ap
+import os
+import random
+from math import ceil
+from time import sleep
+
+parser = ap.ArgumentParser(description='all to github')
+parser.add_argument('-d','--dir',type=str,default='.',help='Choose directory for push')
+args = parser.parse_args()
+d = args.dir
+
+now = os.getcwd()
+
+hi = os.popen(f'find {d} -maxdepth 5 | grep "\.git"')
+
+git_dir = {now+'/' + i.split('.git')[0] for i in list(hi.readlines())}
+
+print('Git list!\n',*git_dir, sep='\n  ', end='\n\n\n')
+print('Start!')
+while git_dir:
+    di = git_dir.pop()
+    os.system(f'echo "" && cd {di} && pwd && git add .')
+    hi = os.popen(f'cd {di} && git status')
+    os.system(f'cd {di} && git reset HEAD')
+    addlist = [eval(f"""b'{i.split(":")[-1].strip()}'""").decode('utf-8') for i in list(hi.readlines())[2:] if ':' in i and not i.strip().endswith(':')]
+    answer = 'y'
+    push = False
+
+    if not addlist: print('  nothing to commit.')
+    else: 
+        print('  Addlist:',end='')
+        print('  ',*addlist, sep='\n  ',end='\n\n')
+        answer = input(f"    repository name: {di.split('/')[-2].ljust(30,' ')}\n    -> ignore changed mode? (y/n): ")
+
+
+    if answer=='y' or answer=='Y':
+        os.system(f'cd {di} && git config core.filemode false')
+
+os.system('clear -x')
+print('  All is done.')

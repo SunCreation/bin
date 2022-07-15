@@ -1,0 +1,1 @@
+sudo ifconfig wlp0s20f3 down && sudo ifconfig wlp0s20f3 hw ether fc:4e:a4:83:aa:7f && sudo ifconfig wlp0s20f3 up
